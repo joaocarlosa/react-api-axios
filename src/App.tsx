@@ -49,21 +49,12 @@ function App() {
   },{
     staleTime: 1000*60,
   })
-
-  console.log(data);
- 
-
   
   const lowerRepo = repo.toLowerCase();
-
   const filter = data?.filter(val => val.description?.toLowerCase().includes(lowerRepo));
-
-
   
-  return (
-    
+  return (    
     <div className='App'>
-
       <div className="container text-center">
         <div className="row">
           <div className="col">
@@ -73,14 +64,10 @@ function App() {
           <div className="col">
           <label className="form-label">Buscar no repositório</label>
             <input className="form-control" placeholder="Busca" value={repo} onChange={(ev)=> useRepo(ev.target.value)}/>
-          </div>
-          
+          </div>          
         </div>
-      </div>
-      
-
-      <>
-        
+      </div>     
+      <>        
         { filter?.map((data) =>(
           <ul>
           <ListGroup >
@@ -91,36 +78,23 @@ function App() {
             <div className="text-right ms-2 me-auto">
               <div className="row">
                 <div className="col">
-                  <a href={data.html_url} className="fw-bold">{data.full_name}</a>
-                  
+                  <a href={data.html_url} className="fw-bold">{data.full_name}</a>                  
                 </div>
                 <div className="col">
                   <label className="form-label">{data.description}</label>
-                </div>
-                          
+                </div>                          
               </div>
             </div>
             <div className="ms-2 me-auto">
               <label className="form-label">{data.language}</label>
             </div>
-
-            <div className="ms-2 me-auto">
-              
-              
-            </div>
-            
             </ListGroup.Item>
           </ListGroup>
           </ul>
-
         ))} 
-      </>      
-
-    </div>
-    
-  )
-
-  
+      </>    
+    </div>    
+  ) 
 }
 
 export default App
