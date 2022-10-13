@@ -1,5 +1,4 @@
 import react, { useState } from 'react'
-//import { useFetch } from './hook/useFetch';
 import axios from 'axios';
 import { useQuery } from 'react-query'
 import { format } from 'date-fns';
@@ -21,9 +20,6 @@ type Repository = {
   pushed_at: string;
 }
 
-
-
-
 function App() {
 
   const formatDate = (date: string) => {
@@ -33,12 +29,8 @@ function App() {
     );
   }
   
-
-  
   const [user, getUser] = useState("joaocarlosa");
-  const [repo, useRepo] = useState("");
-  
-        
+  const [repo, useRepo] = useState("");        
 
   const url = `https://api.github.com/users/${user}/repos`;
 
