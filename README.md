@@ -4,7 +4,7 @@ In this application I demonstrate how to use the fundamental concepts within rea
 
 To consume the api, the axios library was used.
 
-Run the Node server to run the project:
+To start the Node server to run the command:
 ```bash
 $ npm run dev
 ```
