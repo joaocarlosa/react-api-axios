@@ -1,10 +1,10 @@
-import react, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 import { useQuery } from 'react-query'
 import { format } from 'date-fns';
 import { parseISO } from 'date-fns/esm';
 import ptBR from 'date-fns/esm/locale/pt-BR/index.js';
-import  {Button, ListGroup, Table } from 'react-bootstrap';
+import  {ListGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 type Repository = {  
@@ -58,13 +58,14 @@ function App() {
             <input className="form-control" placeholder="Busca" value={repo} onChange={(ev)=> useRepo(ev.target.value)}/>
           </div>          
         </div>
-      </div>     
-      <>        
+      </div>
+      <ul></ul>     
+             
         { filter?.map((data) =>(
           <ul>
           <ListGroup >
             <ListGroup.Item>
-            <div className="text-right ms-2 me-auto">
+            <div className="container text-right ms-2 me-auto">
               <label className="form-label">{formatDate(data.created_at)}</label>
             </div>
             <div className="text-right ms-2 me-auto">
@@ -84,7 +85,7 @@ function App() {
           </ListGroup>
           </ul>
         ))} 
-      </>    
+         
     </div>    
   ) 
 }
