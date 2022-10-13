@@ -39,7 +39,7 @@ function App() {
     console.log('nova chamada')
     return response.data;    
   },{
-    staleTime: 1000*60,
+    staleTime: 200,
   })
   
   const lowerRepo = repo.toLowerCase();
