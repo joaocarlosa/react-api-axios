@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import { format } from 'date-fns';
 import { parseISO } from 'date-fns/esm';
 import ptBR from 'date-fns/esm/locale/pt-BR/index.js';
-import  {ListGroup } from 'react-bootstrap';
+import  {ListGroup, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 type Repository = {  
@@ -25,39 +25,74 @@ function App() {
   const formatDate = (date: string) => {
     return format(parseISO(date), "dd/MM/yyyy", {
       locale: ptBR,
-    }
-    );
+    });
   }
   
   const [user, getUser] = useState("joaocarlosa");
-  const [repo, useRepo] = useState("");        
-
+  const [checked, setCheck] = useState(false);
+  const [repo, useRepo] = useState("");
+  const [lang, useLang] = useState(""); 
+  
+  function toggle(){
+    setCheck(!checked)
+  }
+  
   const url = `https://api.github.com/users/${user}/repos`;
 
   const { data } = useQuery<Repository[]>('repos', async () => {
     const response = await axios.get(url)
-    console.log('nova chamada')
     return response.data;    
   },{
-    staleTime: 200,
-  })
+    staleTime: 1000,
+  })  
   
   const lowerRepo = repo.toLowerCase();
-  const filter = data?.filter(val => val.description?.toLowerCase().includes(lowerRepo));
-  
+  const lowerLang = lang.toLowerCase();  
+
+  var filter = data
+    
+    if(lowerRepo != '' && lowerLang != ''){
+      filter = data?.filter(val => (    
+      val.description?.toLowerCase().includes(lowerRepo)) && val.language?.toLowerCase().includes(lowerLang));
+    }
+    else if(lowerRepo != ''){
+      filter = data?.filter(val => (    
+      val.name?.toLowerCase().includes(lowerRepo)) || val.description?.toLowerCase().includes(lowerRepo));
+    }
+    else if(lowerLang != ''){
+      filter = data?.filter(val => (    
+      val.language?.toLowerCase().includes(lowerLang)));
+    }
+
+    else if(checked){
+      filter = data?.filter(val => (    
+        val.archived.valueOf()));
+    }
+
   return (    
     <div className='App'>
       <ul></ul>
       <div className="container text-center">
         <div className="row">
           <div className="col">
-          <label className="form-label">Buscar por nome do usuário</label>
+          <label className="form-label">Usuário</label>
             <input className="form-control" placeholder="Usuário" value={user} onChange={(ev)=> getUser(ev.target.value)}/>
           </div>
           <div className="col">
-          <label className="form-label">Buscar no repositório</label>
-            <input className="form-control" placeholder="Busca" value={repo} onChange={(ev)=> useRepo(ev.target.value)}/>
-          </div>          
+          <label className="form-label">Repositório</label>
+            <input className="form-control" placeholder="Repositórios" value={repo} onChange={(ev)=> useRepo(ev.target.value)}/>
+          </div>
+          <div className="col">
+          <label className="form-label">Linguagem</label>
+            <input className="form-control" placeholder="Linguagem" value={lang} onChange={(ev)=> useLang(ev.target.value)}/>
+          </div> 
+
+          <div className="col">
+          <label className="form-label"></label>
+            <Form.Group>
+              <Form.Check type="checkbox" label="Arquivado"  onClick={toggle} />
+            </Form.Group>  
+          </div> 
         </div>
       </div>
       <ul></ul>     
@@ -82,11 +117,13 @@ function App() {
             <div className="ms-2 me-auto">
               <label className="form-label">{data.language}</label>
             </div>
+            <div className="ms-2 me-auto">
+              <label className="form-label">{data.archived}</label>              
+            </div>
             </ListGroup.Item>
           </ListGroup>
           </ul>
-        ))} 
-         
+        ))}         
     </div>    
   ) 
 }
