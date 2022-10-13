@@ -117,60 +117,6 @@ function App() {
       </>      
 
     </div>
-   
-
-    /*
-
-    <ul>
-        { valor?.map((data) =>(
-          <div key={data.full_name}>
-            <li>{data.full_name}</li>
-            <p>{data.language}</p>
-          </div>
-        ))} 
-      </ul>
-          
-      <ul>
-        
-        { valor?.map((data) =>(
-          <li key={data.full_name}>{data.full_name}</li>
-        ))}  
-             
-      </ul>
-    <div>
-      <input placeholder="Nome do Repositorio" onChange={event => useName(event.target.value)} />
-      
-      <input placeholder="Forked" onChange={event => useDescr(event.target.value)} />
-      
-      <ul>
-        {
-        data?.filter(post => {
-          if (post.full_name.includes(name.toLowerCase())   ) {
-            
-            return post;
-          }
-        }).map(data=> {
-          return (
-            <div  key={data.full_name}>
-              <strong>{data.full_name}</strong>
-              <p>{data.description}</p>
-              <p>{data.language}</p>
-            </div>
-          )
-        })}
-      </ul>
-    </div>
-
-  
-    const { data } = useQuery<Repository[]>('repos', async () => {
-      const response = await axios.get(url)
-      console.log('nova chamada')
-      return response.data;    
-    },{
-      staleTime: 1000*60,
-    })
-
-    */
     
   )
 
